@@ -9,48 +9,32 @@ var BinarySearchTree = function(value){
 var binarySearchTreeMethods = {
 
   insert: function(v) {
-    var node = BinarySearchTree(v);
     if (v > this.value) {
       if (!this.right) {
-        this.right = node;
+        this.right = BinarySearchTree(v);
       } else {
         this.right.insert(v);
       }
     } else if (v < this.value) {
       if (!this.left) {
-        this.left = node;
+        this.left = BinarySearchTree(v);
       } else {
         this.left.insert(v);
       }
     }
   },
 
-  //accepts a value and returns a boolean reflecting whether or not the value is contained in the tree.
   contains: function(v) {
-    var doesItContain = false;
-    var checkNode = function(node) {
-      if (v === node.value) {
-        doesItContain = true;
-      } else if (v > node.value) {
-        if (v === node.right.value) {
-          doesItContain = true;
-        } else {
-          checkNode(node.right.value);
-        }
-      } else if (v < node.value) {
-        if (v === node.left.value) {
-          doesItContain = true;
-        } else {
-          checkNode(node.left.value);
-        }
-      }
-    };
-    checkNode(this);
-    return doesItContain;
+    if (v === this.value) {
+      return true;
+    } else if (v > this.value && this.right) {
+      return this.right.contains(v);
+    } else if (v < this.value && this.left) {
+      return this.left.contains(v);
+    }
+    return false;
   },
 
-
-//A .depthFirstLog() method, which accepts a callback and executes it on every value contained in the tree.
   depthFirstLog: function(cb, node) {
     node = node || this;
     cb(node.value);
@@ -67,4 +51,7 @@ var binarySearchTreeMethods = {
 
 /*
  * Complexity: What is the time complexity of the above functions?
+ insert: less than O(n) but not quite O(1)
+ contains: less than O(n) but not quite O(1)
+ depthFirstLog: O(n)
  */

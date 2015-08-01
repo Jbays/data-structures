@@ -15,20 +15,20 @@ HashTable.prototype.insert = function(k, v){
 HashTable.prototype.retrieve = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
   var bucket = this._storage.get(i);
-  _.each(bucket, function(item) {
-    if (item[0] === k) {
-      return item[1];
-    }
-  });
+  for (var j = 0; j < bucket.length; j++) {
+    return bucket[j][1];
+  }
 };
 
 HashTable.prototype.remove = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
-  _.each(bucket, function(item) {
-    if (item[0] === k) {
-      this._storage.set(i,[k,null]);
+  var bucket = this._storage.get(i);
+  for (var j = 0; j < bucket.length; j++) {
+    if (bucket[j][0] === k) {
+      bucket[j][1] = null;
+      this._storage.set(i,bucket);
     }
-  });
+  }
 };
 
 

@@ -16,7 +16,9 @@ HashTable.prototype.retrieve = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
   var bucket = this._storage.get(i);
   for (var j = 0; j < bucket.length; j++) {
-    return bucket[j][1];
+    if (bucket[j][0] === k) {
+      return bucket[j][1];
+    }
   }
 };
 
